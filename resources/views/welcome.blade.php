@@ -24,7 +24,7 @@
                     <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
                         <div class="flex lg:justify-center lg:col-start-2">
                             <svg class="h-12 w-auto text-white lg:h-16 lg:text-[#FF2D20]" viewBox="0 0 62 65" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="" fill="currentColor"/></svg>
-                        <h1 >CUSTOMER REPORT</h1>
+                        <h1 >CALL CENTRE REPORT</h1>
                         </div>
                         @if (Route::has('login'))
                             <nav class="-mx-3 flex flex-1 justify-end">

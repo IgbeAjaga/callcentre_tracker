@@ -24,5 +24,5 @@ class CustomerCareAuth
         // If the user is not a customer care, redirect to the index page
         return redirect()->route('/')->with('error', 'You do not have permission to access this page !');
     }
-    }
+    
 }
