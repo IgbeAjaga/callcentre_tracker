@@ -64,7 +64,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="inputResponse" class="form-label"><strong>Response:</strong></label>
+            <label for="inputResponse" class="form-label"><strong>Your Response:</strong></label>
             <select name="response" id="inputResponse" class="form-select @error('response') is-invalid @enderror">
                 <option value="">Select Response</option>
                 <option value="in_stock">in_stock</option>
@@ -77,7 +77,7 @@
 
   
         <div class="mb-3">
-    <label for="inputBranchthatcalled" class="form-label"><strong>Branch(es) With your Selected Response:</strong></label>
+    <label for="inputBranchthatcalled" class="form-label"><strong>Branch(es) that Called You:</strong></label>
     <div id="inputBranchthatcalled" class="@error('branchthatcalled') is-invalid @enderror">
         <div class="form-check">
             <input class="form-check-input" type="checkbox" name="branchthatcalled[]" value="Asokoro" id="branchcalledAsokoro">

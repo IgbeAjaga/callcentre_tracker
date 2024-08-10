@@ -9,6 +9,9 @@
       <a class="btn btn-primary btn-sm" href="{{ route('alloutgoing') }}">
         <i class="fa fa-arrow-left"></i> Back
       </a>
+      <a class="btn btn-info btn-sm" href="{{ route('positive.records') }}">
+    Totally out_of_stock
+</a>
       <button class="btn btn-success btn-sm" onclick="window.print()">
         <i class="fa fa-print"></i> Print
       </button>

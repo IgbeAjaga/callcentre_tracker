@@ -162,6 +162,9 @@ public function search(Request $request): \Illuminate\Contracts\View\View
             }
         }
 
+        // Store the search results in the session
+    session(['search_results' => $outgoingcalls]);
+
         return view('search', compact('outgoingcalls', 'drugData'))->with('i', (request()->input('page', 1) - 1) * 1000);
     }
 
@@ -171,6 +174,45 @@ public function search(Request $request): \Illuminate\Contracts\View\View
     {
         return Excel::download(new OutgoingCallsExport, 'outgoing_calls.xlsx');
     }
+
+
+    public function getPositiveRecords()
+{
+    // Retrieve search results from the session
+    $outgoingcalls = session('search_results');
+    
+    // Prepare the aggregated data for filtering
+    $positiveDrugData = [];
+    foreach ($outgoingcalls as $call) {
+        $drug = $call->drug;
+        $branch = $call->branchcalled;
+
+        if (!isset($positiveDrugData[$drug])) {
+            $positiveDrugData[$drug] = [
+                'Asokoro' => 0, 'Gana' => 0, 'Gimbiya' => 0, 'Gwarinpa 1' => 0,
+                'Gwarinpa 2' => 0, 'Gwarinpa 3' => 0, 'Guzape' => 0, 'New Ademola' => 0,  
+                'New Garki' => 0, 'New Wuse' => 0, 'Old Ademola' => 0, 'Omega' => 0, 'Wholesale' => 0
+            ];
+        }
+
+        if (array_key_exists($branch, $positiveDrugData[$drug])) {
+            $positiveDrugData[$drug][$branch]++;
+        }
+    }
+
+    // Filter drugs where all branches have values greater than zero
+    $filteredData = [];
+    foreach ($positiveDrugData as $drug => $branches) {
+        if (min($branches) > 0) {
+            $filteredData[$drug] = $branches;
+        }
+    }
+
+    return view('positive_records', compact('filteredData'));
+}
+
+
+    
     
     
 }

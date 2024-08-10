@@ -73,6 +73,9 @@ Route::middleware(['auth', 'verified', 'checkApproval'])->group(function () {
     Route::resource('outgoingcalls', OutgoingController::class);
     Route::get('/addincoming', [IncomingController::class, 'create'])->name('addincoming');
     Route::get('/create', [OutgoingController::class, 'create'])->name('create');
+    Route::get('/positive-records', [OutgoingController::class, 'getPositiveRecords'])->name('positive.records');
+    Route::get('/positive-record', [IncomingController::class, 'getPositiveRecord'])->name('positive.record');
+
 });
 
 require __DIR__.'/auth.php';
