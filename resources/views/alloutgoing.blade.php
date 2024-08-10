@@ -22,7 +22,7 @@
         <i class="fa fa-home"></i> Dashboard
       </a>
       <a class="btn btn-success btn-sm" href="{{ route('outgoingcalls.create') }}">
-        <i class="fa fa-plus"></i> Add New Report
+        <i class="fa fa-plus"></i> Add New Outgoing Report
       </a>   
       <a class="btn btn-secondary btn-sm" href="{{ route('outgoingcalls.export') }}">
         <i class="fa fa-file-excel"></i> Export to Excel
@@ -158,7 +158,7 @@
         @endforelse
       </tbody>
     </table>
-    {!! $outgoingcalls->links() !!}   
+       
   </div>
 </div>
 @endsection

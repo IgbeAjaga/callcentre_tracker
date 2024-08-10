@@ -43,7 +43,7 @@
                 <option value="New Wuse">New Wuse</option>
                 <option value="Old Ademola">Old Ademola</option>                                  
                 <option value="Omega">Omega</option>
-                <option value="Wholesale">Wholesale</option>               
+                             
             </select>
             @error('branchcalled')
                 <div class="form-text text-danger">{{ $message }}</div>
@@ -128,10 +128,7 @@
             <input class="form-check-input" type="checkbox" name="branchthatcalled[]" value="Omega" id="branchcalledOmega">
             <label class="form-check-label" for="branchcalledOmega">Omega</label>
         </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="branchthatcalled[]" value="Wholesale" id="branchcalledWholesale">
-            <label class="form-check-label" for="branchcalledWholesale">Wholesale</label>
-        </div>       
+               
     
     </div>
     @error('branchthatcalled')

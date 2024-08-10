@@ -19,8 +19,8 @@
 
     <!-- Small Table to show aggregated data -->
     <h2 class="card-header text-center text-primary" style="width: 100%;"><strong>SUMMARY OF:</strong> 
-    @if(request('drug')) Where {{ request('drug') }} @endif
-    @if(request('response')) is {{ request('response') }} - @endif
+    @if(request('drug'))  {{ request('drug') }} @endif
+    @if(request('response'))  {{ request('response') }} - @endif
     @if(request('branchcalled')) {{ request('branchcalled') }} branch @endif
     @if(request('branchthatcalled')) {{ request('branchthatcalled') }} branch @endif
     @if(request('date_from')) from {{ request('date_from') }} @endif
@@ -45,7 +45,7 @@
           <th>Wholesale</th>
         </tr>
         <tr>
-          <th>Total</th>
+          <th>Total Responses</th>
           @php
             $totals = [
               'Asokoro' => 0,

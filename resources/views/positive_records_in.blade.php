@@ -19,6 +19,7 @@
     <table class="table table-bordered mb-4" style="width: 100% !important;">
       <thead>
         <tr>
+          <th>SN</th> <!-- Added SN column -->
           <th>Drug</th>
           <th>Asokoro</th>
           <th>Gana</th>
@@ -36,8 +37,10 @@
         </tr>
       </thead>
       <tbody>
+        @php $sn = 1; @endphp <!-- Initialize counter variable -->
         @foreach($filteredData as $drug => $branches)
           <tr>
+            <td>{{ $sn++ }}</td> <!-- Increment and display SN -->
             <td>{{ $drug }}</td>
             @foreach($branches as $branch => $count)
               <td>{{ $count }}</td>
@@ -89,6 +92,5 @@
     }
   }
 </style>
-
 
 @endsection

@@ -64,7 +64,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="inputResponse" class="form-label"><strong>Response:</strong></label>
+            <label for="inputResponse" class="form-label"><strong>Response(s) from Other Branch(es):</strong></label>
             <select name="response" id="inputResponse" class="form-select @error('response') is-invalid @enderror">
                 <option value="">Select Response</option>
                 <option value="in_stock">in_stock</option>

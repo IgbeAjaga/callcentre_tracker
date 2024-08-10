@@ -22,7 +22,7 @@
         <i class="fa fa-home"></i> Dashboard
       </a>
       <a class="btn btn-success btn-sm" href="{{ route('addincoming') }}">
-        <i class="fa fa-plus"></i> Add New Report
+        <i class="fa fa-plus"></i> Add New Incoming Report
       </a>   
       <a class="btn btn-secondary btn-sm" href="{{ route('incomingcalls.export') }}">
         <i class="fa fa-file-excel"></i> Export to Excel
@@ -49,7 +49,7 @@
             <option value="New Wuse">New Wuse</option>
             <option value="Old Ademola">Old Ademola</option>                                        
             <option value="Omega">Omega</option>
-            <option value="Wholesale">Wholesale</option>                               
+                                         
           </select>
           @error('branchcalled')
             <div class="form-text text-danger">{{ $message }}</div>
@@ -88,7 +88,7 @@
             <option value="New Wuse">New Wuse</option>
             <option value="Old Ademola">Old Ademola</option>                                        
             <option value="Omega">Omega</option>
-            <option value="Wholesale">Wholesale</option>
+            
           </select>
           @error('branchthatcalled')
             <div class="form-text text-danger">{{ $message }}</div>
@@ -120,12 +120,15 @@
           <th>Branch Called From</th>
           <th>Branch Called To</th>
           <th>Drug Requested</th>
-          <th>Response</th>        
+          <th>Status of Branch Called From</th>        
           <th>Date</th>
           <th width="250px">Action</th>
         </tr>
       </thead>
       <tbody>
+      @php
+        $i = 0;
+    @endphp
         @forelse ($incomingcalls as $incomingcall)
           <tr>
             <td>{{ ++$i }}</td>
@@ -157,7 +160,7 @@
         @endforelse
       </tbody>
     </table>
-    {!! $incomingcalls->links() !!}   
+    
   </div>
 </div>
 @endsection

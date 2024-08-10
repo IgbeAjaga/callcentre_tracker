@@ -19,11 +19,12 @@ class OutgoingController extends Controller
      */
     public function index()
     {
-        $outgoingcalls = Outgoingcalls::latest()->paginate(1000);
+        $outgoingcalls = Outgoingcalls::latest()->get(); // Retrieve all records without pagination
           
         return view('alloutgoing', compact('outgoingcalls'))
-                    ->with('i', (request()->input('page', 1) - 1) * 1000);
+                    ->with('i', 0); // Initialize $i as 0 for numbering
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -105,68 +106,69 @@ class OutgoingController extends Controller
  * Search the products based on various criteria.
  */
 public function search(Request $request): \Illuminate\Contracts\View\View
-    {
-        $query = Outgoingcalls::query();
+{
+    $query = Outgoingcalls::query();
 
-        if ($request->filled('branchcalled')) {
-            $query->where('branchcalled', 'like', '%' . $request->branchcalled . '%');
+    if ($request->filled('branchcalled')) {
+        $query->where('branchcalled', 'like', '%' . $request->branchcalled . '%');
+    }
+
+    if ($request->filled('branchthatcalled')) {
+        $query->where('branchthatcalled', 'like', '%' . $request->branchthatcalled . '%');
+    }
+
+    if ($request->filled('drug')) {
+        $query->where('drug', 'like', '%' . $request->drug . '%');
+    }
+
+    if ($request->filled('response')) {
+        $query->where('response', $request->response);
+    }
+
+    if ($request->filled('date_from')) {
+        $query->whereDate('created_at', '>=', $request->date_from);
+    }
+
+    if ($request->filled('date_to')) {
+        $query->whereDate('created_at', '<=', $request->date_to);
+    }
+
+    if ($request->filled('time_from')) {
+        $query->whereTime('created_at', '>=', $request->input('time_from'));
+    }
+
+    if ($request->filled('time_to')) {
+        $query->whereTime('created_at', '<=', $request->input('time_to'));
+    }
+
+    $outgoingcalls = $query->get(); // Retrieve all records without pagination
+
+    // Prepare the aggregated data for the table
+    $drugData = [];
+    foreach ($outgoingcalls as $call) {
+        $drug = $call->drug;
+        $branch = $call->branchcalled;
+
+        if (!isset($drugData[$drug])) {
+            $drugData[$drug] = [
+                'Asokoro' => 0, 'Gana' => 0, 'Gimbiya' => 0, 'Gwarinpa 1' => 0,
+                'Gwarinpa 2' => 0, 'Gwarinpa 3' => 0, 'Guzape' => 0, 'New Ademola' => 0, 
+                'New Garki' => 0, 'New Wuse' => 0, 'Old Ademola' => 0, 'Omega' => 0,
+                'Wholesale' => 0
+            ];
         }
 
-        if ($request->filled('branchthatcalled')) {
-            $query->where('branchthatcalled', 'like', '%' . $request->branchthatcalled . '%');
+        if (array_key_exists($branch, $drugData[$drug])) {
+            $drugData[$drug][$branch]++;
         }
+    }
 
-        if ($request->filled('drug')) {
-            $query->where('drug', 'like', '%' . $request->drug . '%');
-        }
-
-        if ($request->filled('response')) {
-            $query->where('response', $request->response);
-        }
-
-        if ($request->filled('date_from')) {
-            $query->whereDate('created_at', '>=', $request->date_from);
-        }
-
-        if ($request->filled('date_to')) {
-            $query->whereDate('created_at', '<=', $request->date_to);
-        }
-
-        if ($request->filled('time_from')) {
-            $query->whereTime('created_at', '>=', $request->input('time_from'));
-        }
-    
-        if ($request->filled('time_to')) {
-            $query->whereTime('created_at', '<=', $request->input('time_to'));
-        }
-    
-
-        $outgoingcalls = $query->paginate(1000);
-
-        // Prepare the aggregated data for the table
-        $drugData = [];
-        foreach ($outgoingcalls as $call) {
-            $drug = $call->drug;
-            $branch = $call->branchcalled;
-            
-            if (!isset($drugData[$drug])) {
-                $drugData[$drug] = [
-                    'Asokoro' => 0, 'Gana' => 0, 'Gimbiya' => 0, 'Gwarinpa 1' => 0,
-                    'Gwarinpa 2' => 0, 'Gwarinpa 3' => 0, 'Guzape' => 0, 'New Ademola' => 0,  'New Garki' => 0, 'New Wuse' => 0, 
-                     'Old Ademola' => 0,    'Omega' => 0,  'Wholesale' => 0
-                ];
-            }
-
-            if (array_key_exists($branch, $drugData[$drug])) {
-                $drugData[$drug][$branch]++;
-            }
-        }
-
-        // Store the search results in the session
+    // Store the search results in the session
     session(['search_results' => $outgoingcalls]);
 
-        return view('search', compact('outgoingcalls', 'drugData'))->with('i', (request()->input('page', 1) - 1) * 1000);
-    }
+    return view('search', compact('outgoingcalls', 'drugData'))->with('i', 0); // Initialize $i as 0
+}
+
 
     
     
@@ -180,7 +182,7 @@ public function search(Request $request): \Illuminate\Contracts\View\View
 {
     // Retrieve search results from the session
     $outgoingcalls = session('search_results');
-    
+
     // Prepare the aggregated data for filtering
     $positiveDrugData = [];
     foreach ($outgoingcalls as $call) {
